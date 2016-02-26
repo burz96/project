@@ -1,0 +1,5 @@
+plugins/
+*.swp
+panels.txt
+shaz.acf
+shaz_prefs.txt
