@@ -2,11 +2,21 @@ size = { 2048, 2048 }
 
 function createDataRef(drefNamec, drefLocalc)
     defineProperty(drefNamec, createGlobalPropertyf(drefLocalc))
+	
+	if default ~= nil then
+		setf(drefLocalc, default)
+	end
+
     return drefLocalc
 end
 
-function createDataRefi(drefNameI, drefLocalI)
+function createDataRefi(drefNameI, drefLocalI, default)
     defineProperty(drefNameI, createGlobalPropertyi(drefLocalI))
+
+	if default ~= nil then
+		seti(drefLocalI, default)
+	end
+
     return drefLocalI
 end
 
@@ -29,11 +39,18 @@ end
 
 -- Electrical
 
-function newNode(dref)
+function newNode(dref, threshold)
 	node = {}
 	node.dref = dref
 	node.power = 0
+	node.threshold = 1
+	node.failed = false
 	node.nodes = {}
+
+	if threshold ~= nil then
+		node.threshold = threshold
+	end
+
 	return node
 end
 
@@ -54,13 +71,22 @@ function power_(node, power, set)
 		node.power = node.power + power
 	end
 
+	if node.failed then
+		return
+	end
+
+
 	for i, n in pairs(node.nodes) do
 		power_(n, power, set)
 	end
 end
 
 function update_(node)
-	if node.power > 0 then
+	if node.failed then
+		return
+	end
+
+	if node.power >= node.threshold then
 		seti(node.dref, 1)
 	else
 		seti(node.dref, 0)
@@ -86,81 +112,171 @@ function updateNodes(nodes, powers)
 end
 
 
--- Hydraulics
+-- csd
+-- oil pressure
+-- outlet temp
+-- rise temp
+-- speed
+-- disconnect
 
-drfoo = createDataRefi("foo", "dc10/foo")
-drthing = createDataRefi("dr1", "dc10/dr1")
-drgen1 = createDataRefi("dr2", "dc10/dr2")
-drgen2 = createDataRefi("dr3", "dc10/dr3")
-drapu = createDataRefi("dr4", "dc10/dr4")
-drapuswitch = createDataRefi("dr5", "dc10/test")
+dref_eng1_ac_load = createDataRef("eng1_ac_load", "dc10/engine/eng1_ac_load", 0)
+dref_eng1_dc_load = createDataRef("eng1_dc_load", "dc10/engine/eng1_dc_load", 0)
+dref_eng1_csd_bad = createDataRefi("eng1_csd_bad", "dc10/engine/eng1_csd_bad", 0)
 
-thing = newNode(drthing)
-gen1 = newNode(drgen1)
-gen2 = newNode(drgen2)
-apu = newNode(drapu)
+dref_eng2_ac_load = createDataRef("eng2_ac_load", "dc10/engine/eng2_ac_load", 0)
+dref_eng2_dc_load = createDataRef("eng2_dc_load", "dc10/engine/eng2_dc_load", 0)
+dref_eng2_csd_bad = createDataRefi("eng2_csd_bad", "dc10/engine/eng2_csd_bad", 0)
 
-gen1 = addNodes(gen1, { thing })
-gen2 = addNodes(gen2, { thing })
-apu = addNodes(apu, { thing })
+dref_eng3_ac_load = createDataRef("eng3_ac_load", "dc10/engine/eng3_ac_load", 0)
+dref_eng3_dc_load = createDataRef("eng3_dc_load", "dc10/engine/eng3_dc_load", 0)
+dref_eng3_csd_bad = createDataRefi("eng3_csd_bad", "dc10/engine/eng3_csd_bad", 0)
 
-foo = 0
 
-apu_timer = 0
+dref_gen1_vac = createDataRefi("gen1_vac", "dc10/elec/gen1_vac", 115)
+dref_gen1_hz = createDataRefi("gen1_hz", "dc10/elec/gen1_hz", 400)
+dref_gen1_state = createDataRefi("gen1_vac", "dc10/elec/gen1_state", 0)
+dref_gen1_bus = createDataRefi("gen1_bus", "dc10/elec/gen1_bus", 0)
+dref_gen1_bus_bad = createDataRefi("gen1_bus_bad", "dc10/elec/gen1_bus_bad", 0)
+dref_gen1_off = createDataRefi("gen1_off", "dc10/elec/gen1_off", 0)
 
-seti(drapuswitch, 1)
+dref_gen2_vac = createDataRefi("gen2_vac", "dc10/elec/gen2_vac", 115)
+dref_gen2_hz = createDataRefi("gen2_hz", "dc10/elec/gen2_hz", 400)
+dref_gen2_state = createDataRefi("gen2_vac", "dc10/elec/gen2_state", 0)
+dref_gen2_bus = createDataRefi("gen2_bus", "dc10/elec/gen2_bus", 0)
+dref_gen2_bus_bad = createDataRefi("gen2_bus_bad", "dc10/elec/gen2_bus_bad", 0)
+dref_gen2_off = createDataRefi("gen2_off", "dc10/elec/gen2_off", 0)
 
-gen1_power = 0
-gen2_power = 0
-apu_power = 0
+dref_gen3_vac = createDataRefi("gen3_vac", "dc10/elec/gen3_vac", 115)
+dref_gen3_hz = createDataRefi("gen3_hz", "dc10/elec/gen3_hz", 400)
+dref_gen3_state = createDataRefi("gen3_vac", "dc10/elec/gen3_state", 0)
+dref_gen3_bus = createDataRefi("gen3_bus", "dc10/elec/gen3_bus", 0)
+dref_gen3_bus_bad = createDataRefi("gen3_bus_bad", "dc10/elec/gen3_bus_bad", 0)
+dref_gen3_off = createDataRefi("gen3_off", "dc10/elec/gen3_off", 0)
+
+dref_ac_bus1_isol = createDataRefi("ac_bus1_isol", "dc10/elec/ac_bus1_isol", 0)
+dref_ac_bus1_isol_dual = createDataRefi("ac_bus1_isol_dual", "dc10/elec/ac_bus1_isol_dual", 0)
+dref_ac_bus1_bad = createDataRefi("ac_bus1_bad", "dc10/elec/ac_bus_bad", 0)
+
+dref_ac_bus2_isol = createDataRefi("ac_bus2_isol", "dc10/elec/ac_bus2_isol", 0)
+dref_ac_bus2_isol_dual = createDataRefi("ac_bus2_isol_dual", "dc10/elec/ac_bus2_isol_dual", 0)
+dref_ac_bus2_bad = createDataRefi("ac_bus2_bad", "dc10/elec/ac_bus_bad", 0)
+
+dref_ac_bus3_isol = createDataRefi("ac_bus3_isol", "dc10/elec/ac_bus3_isol", 0)
+dref_ac_bus3_isol_dual = createDataRefi("ac_bus3_isol_dual", "dc10/elec/ac_bus3_isol_dual", 0)
+dref_ac_bus3_bad = createDataRefi("ac_bus3_bad", "dc10/elec/ac_bus_bad", 0)
+
+dref_ac_tie_bus = createDataRefi("ac_tie_bus", "dc10/elec/ac_tie_bus", 0)
+
+
+gen1_bus = 0
+gen2_bus = 0
+gen3_bus = 0
+
+ac_tie_bus = newNode(dref_ac_tie_bus, 1)
 
 function update()
-	print(geti(drapuswitch))
+	-- use sim/../N1_percent[0..2]
+	engine1_speed = 100
+	engine2_speed = 100
+	engine3_speed = 100
 
-	if apu_timer > 88 then
-		gen1_power = 1
-		gen2_power = 1
+	gen1_bus = geti(dref_gen1_bus)
+	gen2_bus = geti(dref_gen2_bus)
+	gen3_bus = geti(dref_gen3_bus)
+
+	-- instead of true use the dual land dataref
+	if true then
+		seti(dref_ac_bus1_isol_dual, geti(dref_ac_bus1_isol))
 	end
 
-	if gen1_power == 0 and gen2_power == 0 then
-		apu_power = geti(drapuswitch)
+	if geti(dref_ac_bus2_isol) == 1 and true then
+		seti(dref_ac_bus2_isol_dual, 1)
+	end
+
+	if geti(dref_ac_bus3_isol) == 1 and true then
+		seti(dref_ac_bus3_isol_dual, 1)
+	end
+
+	if geti(dref_gen1_hz) ~= 400 or geti(dref_gen1_vac) ~= 115 then
+		gen1_bus = 0
+		seti(dref_eng1_csd_bad, 1)
 	else
-		apu_power = 0
+		seti(dref_eng1_csd_bad, 0)
 	end
 
-	if apu_power > 0 then
-		if apu_timer < 90 then
-			apu_timer = apu_timer + 1
+	if geti(dref_gen2_hz) ~= 400 or geti(dref_gen2_vac) ~= 115 then
+		gen2_bus = 0
+		seti(dref_eng2_csd_bad, 1)
+	else
+		seti(dref_eng2_csd_bad, 0)
+	end
+
+	if geti(dref_gen3_hz) ~= 400 or geti(dref_gen3_vac) ~= 115 then
+		gen2_bus = 0
+		seti(dref_eng3_csd_bad, 1)
+	else
+		seti(dref_eng3_csd_bad, 0)
+	end
+
+	if engine1_speed >= 100 and geti(dref_eng1_csd_bad) == 0 then
+		seti(dref_gen1_state, 1)
+	end
+
+	if engine2_speed >= 100 and geti(dref_eng2_csd_bad) == 0 then
+		seti(dref_gen2_state, 1)
+	end
+
+	if engine3_speed >= 100 and geti(dref_eng3_csd_bad) == 0 then
+		seti(dref_gen3_state, 1)
+	end
+
+	ac_bus1_power = 0
+	ac_bus2_power = 0
+	ac_bus3_power = 0
+
+	if geti(dref_gen1_state) == 1 then
+		if gen1_bus == 1 then
+			if geti(dref_ac_bus1_isol) == 0 then
+				ac_bus1_power = 1
+			end
 		end
-	else
-		apu_timer = apu_timer - 1
 	end
 
-	print("timer: ", apu_timer)
+	if geti(dref_gen2_state) == 1 then
+		if gen2_bus == 1 then
+			if geti(dref_ac_bus2_isol) == 0 then
+				ac_bus2_power = 1
+			end
+		end
+	end
+
+	if geti(dref_gen3_state) == 1 then
+		if gen3_bus == 1 then
+			if geti(dref_ac_bus3_isol) == 0 then
+				ac_bus3_power = 1
+			end
+		end
+	end
+
+	if ac_bus1_power == 0 then
+		seti(dref_ac_bus1_bad, 1)
+	end
+
+	if ac_bus2_power == 0 then
+		seti(dref_ac_bus2_bad, 1)
+	end
+
+	if ac_bus3_power == 0 then
+		seti(dref_ac_bus3_bad, 1)
+	end
+
+	ac_tie_bus_power = ac_bus1_power + ac_bus2_power + ac_bus3_power
 
 	updateNodes(
 	{
-		gen1,
-		gen2,
-		apu
+		ac_tie_bus
 	},
 	{
-		gen1_power,
-		gen2_power,
-		apu_power
+		ac_tie_bus_power
 	})
-
-	print("thing power: ", thing.power, " apu: ", apu.power, " generators: ", geti(gen1.dref), geti(gen2.dref))
-
-	if thing.power == 0 then
-		if foo > 0 then
-			foo = foo - 1
-		end
-	else
-		if foo < 100 then
-			foo = foo + 1
-		end
-	end
-
-	seti(drfoo, foo)
 end
