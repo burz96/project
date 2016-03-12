@@ -167,6 +167,7 @@ dref_ac_bus3_bad = createDataRefi("ac_bus3_bad", "dc10/elec/ac_bus_bad", 0)
 
 dref_ac_tie_bus = createDataRefi("ac_tie_bus", "dc10/elec/ac_tie_bus", 0)
 
+foo = createDataRefi("foo", "dc10/test", 0)
 
 gen1_bus = 0
 gen2_bus = 0
