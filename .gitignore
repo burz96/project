@@ -1,2 +1,3 @@
 plugins/
 *.swp
+.vimrc

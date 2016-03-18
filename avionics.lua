@@ -111,25 +111,34 @@ function updateNodes(nodes, powers)
 	end
 end
 
-
--- csd
--- oil pressure
--- outlet temp
--- rise temp
--- speed
--- disconnect
+dref_dc_load1 = createDataRef("dc_load1", "dc10/engine/dc_load1", 0)
+dref_dc_load2 = createDataRef("dc_load2", "dc10/engine/dc_load2", 0)
+dref_dc_load3 = createDataRef("dc_load3", "dc10/engine/dc_load3", 0)
+dref_dc_load4 = createDataRef("dc_load4", "dc10/engine/dc_load4", 0)
 
 dref_eng1_ac_load = createDataRef("eng1_ac_load", "dc10/engine/eng1_ac_load", 0)
-dref_eng1_dc_load = createDataRef("eng1_dc_load", "dc10/engine/eng1_dc_load", 0)
 dref_eng1_csd_bad = createDataRefi("eng1_csd_bad", "dc10/engine/eng1_csd_bad", 0)
+dref_eng1_oil_pressure = createDataRefi("eng1_oil_pressure", "dc10/engine/eng1_oil_pressure", 0)
+dref_eng1_outlet_temp = createDataRefi("eng1_outlet_temp", "dc10/engine/eng1_outlet_temp", 0)
+dref_eng1_rise_temp = createDataRefi("eng1_rise_temp", "dc10/engine/eng1_rise_temp", 0)
+dref_eng1_speed = createDataRefi("eng1_speed", "dc10/engine/eng1_speed", 0)
+dref_eng1_disconnect = createDataRefi("eng1_disconnect", "dc10/engine/eng1_disconnect", 0)
 
 dref_eng2_ac_load = createDataRef("eng2_ac_load", "dc10/engine/eng2_ac_load", 0)
-dref_eng2_dc_load = createDataRef("eng2_dc_load", "dc10/engine/eng2_dc_load", 0)
 dref_eng2_csd_bad = createDataRefi("eng2_csd_bad", "dc10/engine/eng2_csd_bad", 0)
+dref_eng2_oil_pressure = createDataRefi("eng2_oil_pressure", "dc10/engine/eng2_oil_pressure", 0)
+dref_eng2_outlet_temp = createDataRefi("eng2_outlet_temp", "dc10/engine/eng2_outlet_temp", 0)
+dref_eng2_rise_temp = createDataRefi("eng2_rise_temp", "dc10/engine/eng2_rise_temp", 0)
+dref_eng2_speed = createDataRefi("eng2_speed", "dc10/engine/eng2_speed", 0)
+dref_eng2_disconnect = createDataRefi("eng2_disconnect", "dc10/engine/eng2_disconnect", 0)
 
 dref_eng3_ac_load = createDataRef("eng3_ac_load", "dc10/engine/eng3_ac_load", 0)
-dref_eng3_dc_load = createDataRef("eng3_dc_load", "dc10/engine/eng3_dc_load", 0)
 dref_eng3_csd_bad = createDataRefi("eng3_csd_bad", "dc10/engine/eng3_csd_bad", 0)
+dref_eng3_oil_pressure = createDataRefi("eng3_oil_pressure", "dc10/engine/eng3_oil_pressure", 0)
+dref_eng3_outlet_temp = createDataRefi("eng3_outlet_temp", "dc10/engine/eng3_outlet_temp", 0)
+dref_eng3_rise_temp = createDataRefi("eng3_rise_temp", "dc10/engine/eng3_rise_temp", 0)
+dref_eng3_speed = createDataRefi("eng3_speed", "dc10/engine/eng3_speed", 0)
+dref_eng3_disconnect = createDataRefi("eng3_disconnect", "dc10/engine/eng3_disconnect", 0)
 
 
 dref_gen1_vac = createDataRefi("gen1_vac", "dc10/elec/gen1_vac", 115)
@@ -155,17 +164,31 @@ dref_gen3_off = createDataRefi("gen3_off", "dc10/elec/gen3_off", 0)
 
 dref_ac_bus1_isol = createDataRefi("ac_bus1_isol", "dc10/elec/ac_bus1_isol", 0)
 dref_ac_bus1_isol_dual = createDataRefi("ac_bus1_isol_dual", "dc10/elec/ac_bus1_isol_dual", 0)
-dref_ac_bus1_bad = createDataRefi("ac_bus1_bad", "dc10/elec/ac_bus_bad", 0)
+dref_ac_bus1_bad = createDataRefi("ac_bus1_bad", "dc10/elec/ac_bus1_bad", 0)
 
 dref_ac_bus2_isol = createDataRefi("ac_bus2_isol", "dc10/elec/ac_bus2_isol", 0)
 dref_ac_bus2_isol_dual = createDataRefi("ac_bus2_isol_dual", "dc10/elec/ac_bus2_isol_dual", 0)
-dref_ac_bus2_bad = createDataRefi("ac_bus2_bad", "dc10/elec/ac_bus_bad", 0)
+dref_ac_bus2_bad = createDataRefi("ac_bus2_bad", "dc10/elec/ac_bus2_bad", 0)
 
 dref_ac_bus3_isol = createDataRefi("ac_bus3_isol", "dc10/elec/ac_bus3_isol", 0)
 dref_ac_bus3_isol_dual = createDataRefi("ac_bus3_isol_dual", "dc10/elec/ac_bus3_isol_dual", 0)
-dref_ac_bus3_bad = createDataRefi("ac_bus3_bad", "dc10/elec/ac_bus_bad", 0)
+dref_ac_bus3_bad = createDataRefi("ac_bus3_bad", "dc10/elec/ac_bus3_bad", 0)
 
 dref_ac_tie_bus = createDataRefi("ac_tie_bus", "dc10/elec/ac_tie_bus", 0)
+
+dref_apu_ac_volt = createDataRefi("apu_ac_volt", "dc10/elec/apu_ac_volt", 0)
+dref_apu_ac_load = createDataRefi("apu_ac_load", "dc10/elec/apu_ac_load", 0)
+dref_apu_n1 = createDataRefi("apu_n1", "dc10/elec/apu_n1", 0)
+dref_apu_n2 = createDataRefi("apu_n2", "dc10/elec/apu_n2", 0)
+dref_apu_egt = createDataRefi("apu_egt", "dc10/elec/apu_egt", 0)
+dref_apu_oil_qty = createDataRefi("apu_oil_qty", "dc10/elec/apu_oil_qty", 0)
+dref_apu_gen1 = createDataRefi("apu_gen1", "dc10/elec/apu_gen1", 0)
+dref_apu_gen2 = createDataRefi("apu_gen2", "dc10/elec/apu_gen2", 0)
+dref_apu_gen3 = createDataRefi("apu_gen3", "dc10/elec/apu_gen3", 0)
+dref_apu_fuel_pressure = createDataRefi("apu_fuel_pressure", "dc10/elec/apu_fuel_pressure", 0)
+dref_apu_door = createDataRefi("apu_door", "dc10/elec/apu_door", 0)
+dref_apu_fuel_pump = createDataRefi("apu_fuel_pump", "dc10/elec/apu_fuel_pump", 0)
+dref_apu_master = createDataRefi("apu_master", "dc10/elec/apu_master", 0)
 
 foo = createDataRefi("foo", "dc10/test", 0)
 
