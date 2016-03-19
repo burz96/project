@@ -1,0 +1,47 @@
+dref_eng1_ac_load = createDataRef("eng1_ac_load", "dc10/engine/eng1_ac_load", 0)
+dref_eng1_dc_load = createDataRef("eng1_dc_load", "dc10/engine/eng1_dc_load", 0)
+dref_eng1_csd_bad = createDataRefi("eng1_csd_bad", "dc10/engine/eng1_csd_bad", 0)
+
+dref_eng2_ac_load = createDataRef("eng2_ac_load", "dc10/engine/eng2_ac_load", 0)
+dref_eng2_dc_load = createDataRef("eng2_dc_load", "dc10/engine/eng2_dc_load", 0)
+dref_eng2_csd_bad = createDataRefi("eng2_csd_bad", "dc10/engine/eng2_csd_bad", 0)
+
+dref_eng3_ac_load = createDataRef("eng3_ac_load", "dc10/engine/eng3_ac_load", 0)
+dref_eng3_dc_load = createDataRef("eng3_dc_load", "dc10/engine/eng3_dc_load", 0)
+dref_eng3_csd_bad = createDataRefi("eng3_csd_bad", "dc10/engine/eng3_csd_bad", 0)
+
+
+dref_gen1_vac = createDataRefi("gen1_vac", "dc10/elec/gen1_vac", 115)
+dref_gen1_hz = createDataRefi("gen1_hz", "dc10/elec/gen1_hz", 400)
+dref_gen1_state = createDataRefi("gen1_vac", "dc10/elec/gen1_state", 0)
+dref_gen1_bus = createDataRefi("gen1_bus", "dc10/elec/gen1_bus", 0)
+dref_gen1_bus_bad = createDataRefi("gen1_bus_bad", "dc10/elec/gen1_bus_bad", 0)
+dref_gen1_off = createDataRefi("gen1_off", "dc10/elec/gen1_off", 0)
+
+dref_gen2_vac = createDataRefi("gen2_vac", "dc10/elec/gen2_vac", 115)
+dref_gen2_hz = createDataRefi("gen2_hz", "dc10/elec/gen2_hz", 400)
+dref_gen2_state = createDataRefi("gen2_vac", "dc10/elec/gen2_state", 0)
+dref_gen2_bus = createDataRefi("gen2_bus", "dc10/elec/gen2_bus", 0)
+dref_gen2_bus_bad = createDataRefi("gen2_bus_bad", "dc10/elec/gen2_bus_bad", 0)
+dref_gen2_off = createDataRefi("gen2_off", "dc10/elec/gen2_off", 0)
+
+dref_gen3_vac = createDataRefi("gen3_vac", "dc10/elec/gen3_vac", 115)
+dref_gen3_hz = createDataRefi("gen3_hz", "dc10/elec/gen3_hz", 400)
+dref_gen3_state = createDataRefi("gen3_vac", "dc10/elec/gen3_state", 0)
+dref_gen3_bus = createDataRefi("gen3_bus", "dc10/elec/gen3_bus", 0)
+dref_gen3_bus_bad = createDataRefi("gen3_bus_bad", "dc10/elec/gen3_bus_bad", 0)
+dref_gen3_off = createDataRefi("gen3_off", "dc10/elec/gen3_off", 0)
+
+dref_ac_bus1_isol = createDataRefi("ac_bus1_isol", "dc10/elec/ac_bus1_isol", 0)
+dref_ac_bus1_isol_dual = createDataRefi("ac_bus1_isol_dual", "dc10/elec/ac_bus1_isol_dual", 0)
+dref_ac_bus1_bad = createDataRefi("ac_bus1_bad", "dc10/elec/ac_bus_bad", 0)
+
+dref_ac_bus2_isol = createDataRefi("ac_bus2_isol", "dc10/elec/ac_bus2_isol", 0)
+dref_ac_bus2_isol_dual = createDataRefi("ac_bus2_isol_dual", "dc10/elec/ac_bus2_isol_dual", 0)
+dref_ac_bus2_bad = createDataRefi("ac_bus2_bad", "dc10/elec/ac_bus_bad", 0)
+
+dref_ac_bus3_isol = createDataRefi("ac_bus3_isol", "dc10/elec/ac_bus3_isol", 0)
+dref_ac_bus3_isol_dual = createDataRefi("ac_bus3_isol_dual", "dc10/elec/ac_bus3_isol_dual", 0)
+dref_ac_bus3_bad = createDataRefi("ac_bus3_bad", "dc10/elec/ac_bus_bad", 0)
+
+dref_ac_tie_bus = createDataRefi("ac_tie_bus", "dc10/elec/ac_tie_bus", 0)
